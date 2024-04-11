@@ -4,6 +4,7 @@ import Jwt from "jsonwebtoken";
 import User from "../models/User.model.js";
 import { createError } from "../utils/error.js";
 
+// Singup controller
 export const singup = async (req, res, next) => {
   try {
     const salt = bcrypt.genSaltSync(10);
@@ -18,6 +19,7 @@ export const singup = async (req, res, next) => {
   }
 };
 
+// Singin controller
 export const singin = async (req, res, next) => {
   try {
     const user = await User.findOne({ name: req.body.name });
