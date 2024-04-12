@@ -81,5 +81,5 @@ export const unsubscribe = async (req, res, next) => {
 // Like a video
 export const like = (req, res, next) => {};
 
-// Like a video
+// Dislike a video
 export const dislike = (req, res, next) => {};
