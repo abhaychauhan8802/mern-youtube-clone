@@ -1,6 +1,6 @@
 import User from "../models/User.model.js";
 import Video from "../models/Video.model.js";
-import { createError } from "../utils/error.js";
+import { errorHandler } from "../utils/error.js";
 
 // Update user
 export const updateUser = async (req, res, next) => {
@@ -19,7 +19,7 @@ export const updateUser = async (req, res, next) => {
       next(err);
     }
   } else {
-    return next(createError(403, "You are not allow to update this account"));
+    return next(errorHandler(403, "You are not allow to update this account"));
   }
 };
 
@@ -33,7 +33,7 @@ export const deleteUser = async (req, res, next) => {
       next(err);
     }
   } else {
-    return next(createError(403, "You are not allow to delete this account"));
+    return next(errorHandler(403, "You are not allow to delete this account"));
   }
 };
 

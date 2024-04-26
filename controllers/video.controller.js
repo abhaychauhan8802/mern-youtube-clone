@@ -1,6 +1,6 @@
 import User from "../models/User.model.js";
 import Video from "../models/Video.model.js";
-import { createError } from "../utils/error.js";
+import { errorHandler } from "../utils/error.js";
 
 export const addVideo = async (req, res, next) => {
   const newVideo = new Video({ userId: req.user.id, ...req.body });
@@ -16,7 +16,7 @@ export const addVideo = async (req, res, next) => {
 export const updateVideo = async (req, res, next) => {
   try {
     const video = await Video.findById(req.params.id);
-    if (!video) return next(createError(404, "Video not found"));
+    if (!video) return next(errorHandler(404, "Video not found"));
 
     if (req.params.id === video.userId) {
       const updatedVideo = await Video.findByIdAndUpdate(
@@ -28,7 +28,9 @@ export const updateVideo = async (req, res, next) => {
       );
       res.status(200).json(updatedVideo);
     } else {
-      return next(createError(403, "You are not allowed to update this video"));
+      return next(
+        errorHandler(403, "You are not allowed to update this video")
+      );
     }
   } catch (err) {
     next(err);
@@ -38,13 +40,15 @@ export const updateVideo = async (req, res, next) => {
 export const deleteVideo = async (req, res, next) => {
   try {
     const video = await Video.findById(req.params.id);
-    if (!video) return next(createError(404, "Video not found"));
+    if (!video) return next(errorHandler(404, "Video not found"));
 
     if (req.params.id === video.userId) {
       await Video.findByIdAndDelete(req.params.id);
       res.status(200).json("Video deleted successfull");
     } else {
-      return next(createError(403, "You are not allowed to delete this video"));
+      return next(
+        errorHandler(403, "You are not allowed to delete this video")
+      );
     }
   } catch (err) {
     next(err);
